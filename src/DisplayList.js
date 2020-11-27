@@ -1,31 +1,28 @@
 import React from "react";
-import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import MyCard from "./MyCard";
 
 class DisplayList extends React.Component {
+  displayEmpty() {
+    if (this.props.list.length === 0) {
+      return <p>There are no keyboards that match your search query.</p>;
+    }
+  }
+
   render() {
     return (
-      <div>
-        {this.props.list.map((item) => (
-          <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src={item.src} />
-            <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </Card.Text>
-            </Card.Body>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>Cras justo odio</ListGroupItem>
-              <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-              <ListGroupItem>Vestibulum at eros</ListGroupItem>
-            </ListGroup>
-            <Card.Body>
-              <Card.Link href="#">Card Link</Card.Link>
-              <Card.Link href="#">Another Link</Card.Link>
-            </Card.Body>
-          </Card>
-        ))}
+      <div className="container-fluid">
+        <div className="row">
+          {this.displayEmpty()}
+          {this.props.list.map((item) => (
+            <MyCard
+              name={item.name}
+              src={item.src}
+              price={item.price}
+              desc={item.desc}
+              addItem={this.props.addItem}
+            ></MyCard>
+          ))}
+        </div>
       </div>
     );
   }

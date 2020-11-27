@@ -183,6 +183,7 @@ class FilteredList extends React.Component {
                 return 0;
               }
             })}
+          addItem={this.props.addItem}
         ></DisplayList>
       </div>
     );
