@@ -5,7 +5,7 @@ import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 class MyCard extends React.Component {
   //Handles the display of the multiple switches per keyboard
   switches = () => {
-    return this.props.switches.map((item) => <ul>{item}</ul>);
+    return this.props.switches.map((item) => <ul key={item}>{item}</ul>);
   };
 
   render() {
