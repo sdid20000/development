@@ -13,18 +13,21 @@ class FilteredList extends React.Component {
     };
   }
 
+  //Handles the change of brand
   onSelectFilterBrand = (event) => {
     this.setState({
       brand: event,
     });
   };
 
+  //Handles the change of switch
   onSelectFilterSwitch = (event) => {
     this.setState({
       switch: event,
     });
   };
 
+  //Filter function for brand
   matchesFilterBrand = (item) => {
     if (this.state.brand === "All") {
       return true;
@@ -35,9 +38,11 @@ class FilteredList extends React.Component {
     }
   };
 
+  //Filter function for switch
   matchesFilterSwitches = (item) => {
     if (this.state.switch === "All") {
       return true;
+      //Looks through all of the switches to see if it's in there
     } else if (item.switches.indexOf(this.state.switch) >= 0) {
       return true;
     } else {
@@ -45,12 +50,14 @@ class FilteredList extends React.Component {
     }
   };
 
+  //Handles changing the sort state
   changeSortState = (newSort) => {
     this.setState({
       sort: newSort,
     });
   };
 
+  //Handles changing the switch state
   changeSwitchState = (newSwitch) => {
     this.setState({
       switch: newSwitch,
@@ -184,6 +191,7 @@ class FilteredList extends React.Component {
               }
             })}
           addItem={this.props.addItem}
+          key={this.props.list}
         ></DisplayList>
       </div>
     );

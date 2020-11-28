@@ -1,7 +1,13 @@
 import React from "react";
 import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 
-class DisplayList extends React.Component {
+//A class to display a single card
+class MyCard extends React.Component {
+  //Handles the display of the multiple switches per keyboard
+  switches = () => {
+    return this.props.switches.map((item) => <ul>{item}</ul>);
+  };
+
   render() {
     return (
       <div className="m-4">
@@ -13,6 +19,10 @@ class DisplayList extends React.Component {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>Price : ${this.props.price}</ListGroupItem>
+            <ListGroupItem>
+              Available switches:
+              {this.switches()}
+            </ListGroupItem>
           </ListGroup>
           <Card.Body>
             <Button
@@ -32,4 +42,4 @@ class DisplayList extends React.Component {
     );
   }
 }
-export default DisplayList;
+export default MyCard;

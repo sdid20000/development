@@ -12,6 +12,23 @@ class CartCard extends React.Component {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>Price : ${this.props.price}</ListGroupItem>
+            <ListGroupItem>
+              <button
+                type="button"
+                onClick={() => this.props.subOne(this.props.name)}
+                className="btn btn-outline-primary btn-sm mr-2"
+              >
+                -
+              </button>
+              Quantity: {this.props.quantity}
+              <button
+                type="button"
+                onClick={() => this.props.addOne(this.props.name)}
+                className="btn btn-outline-primary btn-sm ml-2"
+              >
+                +
+              </button>
+            </ListGroupItem>
           </ListGroup>
         </Card>
       </div>

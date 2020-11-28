@@ -8,6 +8,9 @@ class App extends Component {
     super();
     this.state = {
       items: [],
+      names: [],
+      quantities: [],
+      cost: 0,
     };
   }
 
@@ -209,14 +212,89 @@ class App extends Component {
     },
   ];
 
+  //A method that handles the add item button
   addItem = (item) => {
-    console.log("HERE");
-    const items = [...this.state.items, item];
+    var names = this.state.names;
+    var quantities = this.state.quantities;
+
+    //Finds the name and increments it by one, adds it in the array if not present
+    if (names.includes(item[0])) {
+      quantities[names.indexOf(item[0])] += 1;
+    } else {
+      names.push(item[0]);
+      quantities.push(1);
+      const items = [...this.state.items, item];
+      this.setState({
+        items,
+        cost: this.state.cost + item[1],
+        names,
+        quantities,
+      });
+    }
+
+    //Add the corresponding cost
     this.setState({
+      cost: this.state.cost + item[1],
+      names,
+      quantities,
+    });
+  };
+
+  //A method that handles the subtract item button in the cart
+  subOne = (name) => {
+    let names = this.state.names;
+    let quantities = this.state.quantities;
+    let cost = 0;
+    let index = names.indexOf(name);
+    let itemsIndex = 0;
+    let items = this.state.items;
+
+    //Finds the corresponding quantity and subtracts it by one
+    quantities[index] -= 1;
+    for (let i = 0; i < names.length; i++) {
+      if (this.state.items[i][0] === name) {
+        cost = this.state.items[i][1];
+        itemsIndex = i;
+      }
+    }
+
+    //Handles underflow
+    if (quantities[index] === 0) {
+      items.splice(itemsIndex, itemsIndex + 1);
+      names.splice(index, index + 1);
+      quantities.splice(index, index + 1);
+    }
+
+    //Subtracts the cost and updates the state
+    this.setState({
+      cost: this.state.cost - cost,
+      quantities,
       items,
     });
   };
 
+  //A method that handles the add item button in the cart
+  addOne = (name) => {
+    let names = this.state.names;
+    let quantities = this.state.quantities;
+    let cost = 0;
+    let index = names.indexOf(name);
+
+    //Finds the corresponding name and adds one to the quantity
+    quantities[index] += 1;
+    for (let i = 0; i < names.length; i++) {
+      if (this.state.items[i][0] === name) {
+        cost = this.state.items[i][1];
+      }
+    }
+
+    this.setState({
+      cost: this.state.cost + cost,
+      quantities,
+    });
+  };
+
+  //In the render function, passes in the various functions as props so the information flows back to app.
   render() {
     return (
       <div>
@@ -230,7 +308,14 @@ class App extends Component {
               ></FilteredList>
             </div>
             <div className="col">
-              <Cart items={this.state.items}></Cart>
+              <Cart
+                items={this.state.items}
+                cost={this.state.cost}
+                names={this.state.names}
+                quantities={this.state.quantities}
+                subOne={this.subOne}
+                addOne={this.addOne}
+              ></Cart>
             </div>
           </div>
         </div>
